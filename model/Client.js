@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import User from "./User";
 const clientSchema = new mongoose.Schema(
   {
     // WhatsApp Cloud phone_number_id
@@ -7,6 +7,12 @@ const clientSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true
+    },
+    userId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:User,               //Reference to User Model  User._id
+      required:true,
+      index:true
     },
     name:{
       type:String,

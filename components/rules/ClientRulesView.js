@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Trash2, Edit3, Power, Image as ImageIcon, FileText, Plus, MoreVertical, Zap,List } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
-export default function ClientRulesView({ client, onBack, onEditRule, onAddRule }) {
+export default function ClientRulesView({ client, onEditRule, onAddRule }) {
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(true);
   console.log("Client", client)
@@ -142,18 +142,17 @@ export default function ClientRulesView({ client, onBack, onEditRule, onAddRule 
   return (
     <div className="p-8 max-w-7xl mx-auto">
       {/* Header Section */}
-      <div className="mb-10 flex justify-between items-end border-b pb-6">
-        <div>
-          <button onClick={onBack} className="group flex items-center text-slate-500 hover:text-blue-600 transition-colors mb-4 text-sm font-medium">
-            <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span> Back to Clients
-          </button>
-          <h2 className="text-4xl font-black text-slate-900 tracking-tight">{client.name}</h2>
-          <p className="text-slate-500 font-mono mt-1">{client.whatsappNumber}</p>
-        </div>
-        <button onClick={onAddRule} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-green-200 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
-          <Plus className="w-5 h-5" /> Add New Rule
-        </button>
-      </div>
+      
+<div className="mb-10 flex justify-between items-end border-b pb-6">
+  <div>
+    {/* DELETE the back button entirely */}
+    <h2 className="text-4xl font-black text-slate-900 tracking-tight">{client.name}</h2>
+    <p className="text-slate-500 font-mono mt-1">{client.whatsappNumber}</p>
+  </div>
+  <button onClick={onAddRule} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-green-200 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+    <Plus className="w-5 h-5" /> Add New Rule
+  </button>
+</div>
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20">

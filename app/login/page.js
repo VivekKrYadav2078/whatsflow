@@ -35,8 +35,8 @@ export default function LoginPage() {
           <div className="bg-green-100 p-3 rounded-2xl mb-4">
             <Zap className="w-8 h-8 text-green-600 fill-green-600" />
           </div>
-          <h1 className="text-2xl font-black text-slate-800">Nedrix Admin</h1>
-          <p className="text-slate-400 text-sm">Secure Access for ReplyChat</p>
+          <h1 className="text-2xl font-black text-slate-800">WhatsFlow</h1>
+          <p className="text-slate-400 text-sm">Login to Start Automating your WhatsApp</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
