@@ -8,16 +8,16 @@ export async function GET(req) {
   try {
     await connectDB();
     // await connectDB();
-    console.log("🚀 Inside server - Connected to DB safely!");
-    const validUserId="6a16ad2bc8e490fe8c7e5564" 
+    // console.log("🚀 Inside server - Connected to DB safely!");
+    const validUserId=process.env.TEST_USER_ID
    
     const dummyClient = await Client.create({
-      clientId: "986038557922818", // Paste Phone number ID here
+      clientId: process.env.TEST_CLIENT_ID, // Paste Phone number ID here
       userId: new mongoose.Types.ObjectId(validUserId),  // Paste your actual test User's MongoDB _id
-      name: "Vivek Kumar Yadav", 
-      whatsappNumber: "6291509765",        // Your WhatsApp phone number
-      accessToken: "EAAWYnkgz4HABQjkzLOE32pcPZA35HOtgUZC3ccBxZB4hbEwPnzAdS6XtR7xc2cZBOfoVIjnC5AWqPXGDVYdgstAY9r8ihzAAeLymtYKtxNZAyG1u9wLiwCwGXZALVsXzSh8nDZC97634SUFTNrisybKwdHdnFcLAa3H9JUd7ZCtZCrsDKVtpZClmB8QENJY5ibiokPYnfyJXlYZBBFowd9UVX4KK4uKOcTNt3aZCUQnLsvR5XZBZAy9EoMO4XuqbWSqn68bKdbzCD7aE0hPytUZB9KHdq0Pgy8k", // Paste System User Token
-      active: true
+      name: process.env.TEST_NAME, 
+      whatsappNumber: process.env.TEST_NUMBER,        // Your WhatsApp phone number
+      accessToken: process.env.TEST_ACCESS_TOKEN, // Paste System User Token
+      active: process.env.TEST_ACTIVE
     });
 
    console.log("✅ Client record successfully inserted into MongoDB!");

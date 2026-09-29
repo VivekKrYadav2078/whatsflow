@@ -132,14 +132,14 @@ export default function SettingsPage({ client }) {
           <div className="flex items-center justify-between">
             <div>
               <p className="font-bold text-slate-800">Currently: <span className={client?.status === "Active" ? "text-green-600" : "text-red-500"}>{client?.status}</span></p>
-              <p className="text-xs text-slate-400 mt-1">To pause/resume your bot, contact support or use the toggle below.</p>
+              <p className="text-xs text-slate-400 mt-1">To pause/resume your bot, contact support </p>
             </div>
             <div className={`px-4 py-2 rounded-xl font-bold text-sm ${
-              client?.status === "Active"
+              client?.active 
                 ? "bg-green-100 text-green-700"
                 : "bg-red-100 text-red-600"
             }`}>
-              {client?.status === "Active" ? "● Active" : "○ Paused"}
+              {client?.active  ? "● Active" : "○ Paused"}
             </div>
           </div>
         </div>

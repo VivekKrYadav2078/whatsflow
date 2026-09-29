@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { Trash2, Edit3, Power, Image as ImageIcon, FileText, Plus, MoreVertical, Zap,List } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
 
 export default function ClientRulesView({ client, onEditRule, onAddRule }) {
   const [rules, setRules] = useState([]);
@@ -25,16 +26,16 @@ export default function ClientRulesView({ client, onEditRule, onAddRule }) {
         // FIX: Use client._id here
         const response = await fetch(`/api/rules?clientId=${client.clientId}`);
         const data = await response.json();
-        console.log("In rules view: ", data);
+        // console.log("In rules view: ", data);
         setRules(data.rules || []);
       } catch (error) {
-        console.error("Error fetching rules:", error);
+        // console.error("Error fetching rules:", error);
       } finally {
         setLoading(false);
       }
     };
     if (client?.clientId) fetchRules();
-  }, [client.clientId]);
+  }, [client?.clientId]);
 
   const handleDelete = async (ruleId, clientId) => {
     if (!confirm("Are you sure you want to delete this rule? This will also remove any media from Cloudinary.")) return;
@@ -67,7 +68,7 @@ export default function ClientRulesView({ client, onEditRule, onAddRule }) {
       }));
       const response = await fetch("/api/rules", { method: "PUT", body: formData });
       const result = await response.json();
-      console.log("Toggle res", response);
+      // console.log("Toggle res", response);
       if (response.ok) {
         setRules(rules.map(r => r._id === rule._id ? { ...r, active: newStatus } : r));
       }else{
@@ -138,7 +139,34 @@ export default function ClientRulesView({ client, onEditRule, onAddRule }) {
   //     )}
   //   </div>
   // );
+if (!client) {
+  return (
+    <div className="p-8 max-w-7xl mx-auto">
+      <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center">
+        <div className="mx-auto mb-5 w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center">
+          <span className="text-3xl">💬</span>
+        </div>
 
+        <h2 className="text-2xl font-black text-slate-900">
+          Connect WhatsApp
+        </h2>
+
+        <p className="text-slate-500 mt-2 max-w-md mx-auto">
+          Connect your WhatsApp Business account to create and manage
+          automation rules.
+        </p>
+
+       <Link
+  href="/onboarding"
+  className="mt-6 inline-block bg-green-600 hover:bg-green-700 text-white
+             px-6 py-3 rounded-xl font-bold transition"
+>
+  Connect WhatsApp
+</Link>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="p-8 max-w-7xl mx-auto">
       {/* Header Section */}
@@ -146,8 +174,8 @@ export default function ClientRulesView({ client, onEditRule, onAddRule }) {
 <div className="mb-10 flex justify-between items-end border-b pb-6">
   <div>
     {/* DELETE the back button entirely */}
-    <h2 className="text-4xl font-black text-slate-900 tracking-tight">{client.name}</h2>
-    <p className="text-slate-500 font-mono mt-1">{client.whatsappNumber}</p>
+    <h2 className="text-4xl font-black text-slate-900 tracking-tight">{client?.name}</h2>
+    <p className="text-slate-500 font-mono mt-1">{client?.whatsappNumber}</p>
   </div>
   <button onClick={onAddRule} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-green-200 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
     <Plus className="w-5 h-5" /> Add New Rule
@@ -157,7 +185,7 @@ export default function ClientRulesView({ client, onEditRule, onAddRule }) {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-600 mb-4"></div>
-          <p className="text-slate-400 font-medium">Nedrix is syncing your rules...</p>
+          <p className="text-slate-400 font-medium">Whatsflow is syncing your rules...</p>
         </div>
       ) : (
         <div className="grid gap-12">

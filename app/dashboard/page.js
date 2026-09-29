@@ -19,7 +19,7 @@ export default async function Page() {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     userId = decoded.id; // adjust based on your token payload
-    console.log("Userid is",userId)
+
   } catch {
     redirect("/login");
   }
@@ -28,9 +28,17 @@ export default async function Page() {
 
 // Fetch ONLY this user's client (assuming Client has a userId/owner field)
   const rawClient = await Client.findOne({ userId }).lean();
+ 
 
 
-  if (!rawClient) redirect("/onboarding"); // or show a setup page
+  // if (!rawClient) redirect("/onboarding"); // or show a setup page
+    // const rawClient = await Client.findOne({ userId }).lean();
+
+  // No WhatsApp connected
+  if (!rawClient) {
+    return <Dashboard client={null} />;
+  }
+  
   
 
  const client = {
@@ -38,7 +46,7 @@ export default async function Page() {
     clientId: rawClient.clientId,
     name: rawClient.name,
     whatsappNumber: rawClient.whatsappNumber,
-    status: rawClient.status || "",
+    active: rawClient.active || "",
   };
   return <Dashboard client={client} />;
 }

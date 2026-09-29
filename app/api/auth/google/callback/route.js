@@ -7,6 +7,10 @@ import User from "@/model/User";
 
 const client =new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+
+
 export async function GET(req){
     await dbConnect();
 
@@ -14,8 +18,8 @@ export async function GET(req){
     const code=searchParams.get("code");
 
     if(!code){
-        console.log("No code");
-        return NextResponse.redirect("http://localhost:3000/login");
+        // console.log("No code");
+        return NextResponse.redirect(`${baseUrl}/`);
     }
 
     try{
@@ -34,9 +38,9 @@ export async function GET(req){
         })
 
         const tokenData=await tokenRes.json();
-        console.log("Token Data:",tokenData);
+   
         if(!tokenData.id_token){
-            return NextResponse.redirect("http://localhost:3000/login");
+            return NextResponse.redirect(`${baseUrl}`);
         }
 
         //Verify ID token
@@ -75,7 +79,7 @@ export async function GET(req){
         
         //Set cookie + redirect
         const response=NextResponse.redirect(
-            "http://localhost:3000/dashboard"
+            `${baseUrl}/dashboard`
         );
 
         response.cookies.set("token",token,{
@@ -86,8 +90,8 @@ export async function GET(req){
         });
         return response;
     }catch(error){
-        console.error("Google Auth Error:",error);
-        return NextResponse.redirect("http://localhost:3000/login");
+        // console.error("Google Auth Error:",error);
+        return NextResponse.redirect(`${baseUrl}/`);
     }
     
 

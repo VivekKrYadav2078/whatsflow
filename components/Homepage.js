@@ -29,7 +29,8 @@ export default function HomePage({ client, onNavigate }) {
     if (client?.clientId) fetchStats()
   }, [client])
 
-  const botIsActive = client?.status === "Active"
+  const botIsActive = client?.active === true;
+  console.log("IS active",botIsActive)
 
   return (
     <div className="p-8 max-w-5xl mx-auto">

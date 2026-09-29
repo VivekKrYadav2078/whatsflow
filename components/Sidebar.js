@@ -21,7 +21,7 @@ export default function Sidebar({ activeSection, setActiveSection, client }) {
             W
           </div>
           <div>
-            <h1 className="text-lg font-black text-slate-900 leading-tight">WhatsApp Hub</h1>
+            <h1 className="text-lg font-black text-slate-900 leading-tight">Whatsflow</h1>
           </div>
         </div>
         {/* User's business info */}
@@ -29,11 +29,11 @@ export default function Sidebar({ activeSection, setActiveSection, client }) {
           <p className="text-sm font-bold text-slate-800 truncate">{client?.name}</p>
           <p className="text-xs text-green-600 font-medium mt-0.5">📱 {client?.whatsappNumber}</p>
           <span className={`inline-block mt-2 text-[10px] font-black px-2 py-0.5 rounded-full ${
-            client?.status === "Active"
+            client?.active
               ? "bg-green-100 text-green-700"
               : "bg-red-100 text-red-600"
           }`}>
-            {client?.status === "Active" ? "● Bot Active" : "○ Bot Paused"}
+            { client?.active ? "● Bot Active" : "○ Bot Paused"}
           </span>
         </div>
       </div>
