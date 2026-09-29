@@ -15,7 +15,7 @@ export function GET(req) {
     return new Response(challenge, { status: 200 });
   }
 
- console.error("Webhook verification failed ");
+//  console.error("Webhook verification failed ");
   return new Response("Forbidden", { status: 403 });
 }
 
@@ -24,7 +24,7 @@ const qstash = new Client({baseUrl: "https://qstash-eu-central-1.upstash.io",
 
 export async function POST(req) {
   // FAST ACK
-  console.log("Webhook received ")
+  // console.log("Webhook received ")
 //   new Response("Success",{status:200});
  try {
     const body = await req.json().catch(() => null);
@@ -36,12 +36,18 @@ export async function POST(req) {
    // If it's a status update (read/delivered), we just say OK and stop
     if(!cleanMessage) return new Response("OK", { status: 200 });
 
+
+    console.log("Publishing to QStash...");
+console.log(
+  "Worker URL:",
+  `${process.env.NEXT_PUBLIC_SITE_URL}/api/worker/handle-logic`
+);
     //  Push the CLEAN data to QStash
-     qstash.publishJSON({
+    await qstash.publishJSON({
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/worker/handle-logic`,
       body:cleanMessage
     });
-
+console.log("QStash published:", result);
 
     //  {
     //     leadPhone: cleanMessage.from,  // User's phone number
@@ -53,6 +59,7 @@ export async function POST(req) {
     return new Response("OK", { status: 200 });
 
  }catch(err){
+    console.error("Webhook error:", err);
 
     return new Response("OK", { status: 200 });
 
